@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all
+    @posts = Post.page(params[:page]).per(2)
     respond_to do |format|
       format.html
       format.json { render json: @posts }
