@@ -26,6 +26,6 @@ This is a small blog built using React and Ruby on Rails. The blog consists of t
 1. Clone the repository:
 
 ```sh
-git clone https://github.com/your-username/blog-app.git
+git clone https://github.com/andreypedro/blog-app
 cd blog-app
 ```
