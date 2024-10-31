@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   # Defines the root path route ("/")
-  resources :posts, only: [ :index, :create, :update, :destroy ]
+  resources :posts, only: [ :index, :show, :create, :update, :destroy ]
   root "posts#index"
   get "*path", to: "posts#index", constraints: ->(req) { req.format.html? && req.path != "/" }
 end
