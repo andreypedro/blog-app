@@ -13,7 +13,7 @@ const Navbar = () => {
   }, []);
 
   function handleLogout(e) {
-    e.preventDefault(); // Evita o comportamento padrão do link
+    e.preventDefault();
 
     fetch("/users/sign_out", {
       method: "DELETE",
@@ -22,11 +22,11 @@ const Navbar = () => {
         "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
           .content,
       },
-      credentials: "same-origin", // Inclui cookies e cabeçalhos de autenticação
+      credentials: "same-origin",
     })
       .then((response) => {
         if (response.ok) {
-          window.location.href = "/"; // Redireciona após o logout
+          window.location.href = "/";
         } else {
           console.error("Logout failed");
         }
@@ -45,7 +45,7 @@ const Navbar = () => {
         {isAuthenticated && (
           <li className="navbar-item">
             <Link to="/create" className="navbar-link">
-              New Post
+              New post
             </Link>
           </li>
         )}

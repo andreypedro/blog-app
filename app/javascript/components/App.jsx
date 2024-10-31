@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import ListPosts from "./posts/ListPosts.jsx";
-import CreatePost from "./posts/CreatePost.jsx";
 import Navbar from "./common/Navbar.jsx";
+import PostForm from "./posts/PostForm.jsx";
 
 const App = () => {
   return (
@@ -11,7 +11,8 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<ListPosts />} />
-          <Route path="/create" element={<CreatePost />} />
+          <Route path="/create" element={<PostForm />} />
+          <Route path="/edit/:id" element={<PostForm />} />
         </Routes>
       </div>
     </Router>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import PostItem from "./PostItem.jsx";
-import "./styles/ListPosts.css"; // Import styles specific to the component
+import "./styles/ListPosts.css";
 
 const ListPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -9,6 +9,14 @@ const ListPosts = () => {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const currentUser = document
+      .querySelector('meta[name="current-user"]')
+      .getAttribute("content");
+    setIsAuthenticated(currentUser === "true");
+  }, []);
 
   const fetchPosts = useCallback(() => {
     setLoading(true);
@@ -62,6 +70,23 @@ const ListPosts = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
+  const handleDelete = (id) => {
+    axios
+      .delete(`/posts/${id}`, {
+        headers: {
+          "X-CSRF-Token": document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content"),
+        },
+      })
+      .then(() => {
+        setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+      })
+      .catch((error) => {
+        console.error("There was an error deleting the post!", error);
+      });
+  };
+
   if (error) return <div>Error: {error.message}</div>;
 
   return (
@@ -69,7 +94,12 @@ const ListPosts = () => {
       <h1>Posts</h1>
       <div className="post-list">
         {posts.map((post, index) => (
-          <PostItem key={post.id || `remote-${index}`} post={post} />
+          <PostItem
+            key={post.id || `remote-${index}`}
+            post={post}
+            isAuthenticated={isAuthenticated}
+            onDelete={handleDelete}
+          />
         ))}
       </div>
       {loading && <div className="loading">Loading...</div>}

@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [ :create ]
+  before_action :authenticate_user!, only: [ :create, :update, :destroy ]
   def index
     @local_posts = Post.page(params[:page]).per(2)
     @remote_posts = NewsApiService.fetch_posts("watches", params[:page], 2)
@@ -9,6 +9,11 @@ class PostsController < ApplicationController
       format.html
       format.json { render json: @posts }
     end
+  end
+
+  def show
+    @post = Post.find(params[:id])
+    render json: @post
   end
 
   def create
@@ -31,8 +36,11 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    @post.destroy
-    head :no_content
+    if @post.destroy
+      head :no_content
+    else
+      render json: @post.errors, status: :unprocessable_entity
+    end
   end
 
   private
