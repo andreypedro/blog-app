@@ -1,22 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import ListPosts from "./ListPosts.jsx";
-import CreatePost from "./CreatePost.jsx";
+import ListPosts from "./posts/ListPosts.jsx";
+import CreatePost from "./posts/CreatePost.jsx";
+import Navbar from "./common/Navbar.jsx";
 
 const App = () => {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/create">Create Post</Link>
-            </li>
-          </ul>
-        </nav>
+        <Navbar />
         <Routes>
           <Route path="/" element={<ListPosts />} />
           <Route path="/create" element={<CreatePost />} />
