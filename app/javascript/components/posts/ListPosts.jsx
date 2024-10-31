@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import PostItem from "./PostItem.jsx";
+import "./styles/ListPosts.css";
 
 const ListPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -38,7 +40,7 @@ const ListPosts = () => {
       }
     };
 
-    checkContentHeight(); // Check initially
+    checkContentHeight();
 
     window.addEventListener("resize", checkContentHeight);
     return () => window.removeEventListener("resize", checkContentHeight);
@@ -46,14 +48,14 @@ const ListPosts = () => {
 
   const handleScroll = useCallback(() => {
     if (
-      window.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight ||
-      loading
+      window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 1 &&
+      hasMore &&
+      !loading
     ) {
-      return;
+      setPage((prevPage) => prevPage + 1);
     }
-    setPage((prevPage) => prevPage + 1);
-  }, [loading]);
+  }, [loading, hasMore]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -65,16 +67,20 @@ const ListPosts = () => {
   return (
     <div>
       <h1>Posts</h1>
-      <ul>
+      <div className="post-list">
         {posts.map((post) => (
-          <li key={post.id}>
-            <h2>{post.title}</h2>
-            <p>{post.content}</p>
-          </li>
+          <PostItem key={post.id} post={post} />
         ))}
-      </ul>
-      {loading && <div>Loading...</div>}
-      {!hasMore && <div>No more posts</div>}
+      </div>
+      {loading && <div className="loading">Loading...</div>}
+      {!hasMore && (
+        <div className="no-more-posts">
+          <span role="img" aria-label="party-popper">
+            🎉
+          </span>{" "}
+          You've reached the end! No more posts.
+        </div>
+      )}
     </div>
   );
 };

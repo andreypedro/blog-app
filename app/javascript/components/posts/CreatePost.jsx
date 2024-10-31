@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./styles/CreatePost.css"; // Importar estilos específicos do componente
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -35,24 +36,33 @@ const CreatePost = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Title</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Content</label>
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        ></textarea>
-      </div>
-      <button type="submit">Create Post</button>
-    </form>
+    <div>
+      <h1>Create a new post</h1>
+      <form onSubmit={handleSubmit} className="create-post-form">
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="form-control"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="content">Content</label>
+          <textarea
+            id="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="form-control"
+          ></textarea>
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Create Post
+        </button>
+      </form>
+    </div>
   );
 };
 

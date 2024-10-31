@@ -1,0 +1,16 @@
+/* ListPosts.css */
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+}
+
+.no-more-posts {
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 60px;
+  font-size: 1.2rem;
+  color: #666;
+}

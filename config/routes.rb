@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users, skip: [ :registrations ]
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -12,4 +14,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   resources :posts, only: [ :index, :create, :update, :destroy ]
   root "posts#index"
+  get "*path", to: "posts#index", constraints: ->(req) { req.format.html? && req.path != "/" }
 end

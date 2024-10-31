@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!, only: [ :create ]
   def index
     @posts = Post.page(params[:page]).per(2)
     respond_to do |format|

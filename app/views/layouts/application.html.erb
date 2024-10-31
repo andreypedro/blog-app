@@ -3,7 +3,6 @@
   <head>
     <title><%= content_for(:title) || "Blog App" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -14,12 +13,18 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <meta name="current-user" content="<%= current_user ? 'true' : 'false' %>">
 
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
   </head>
 
   <body>
-    <%= yield %>
+    <div id="root"></div>
+    <% if controller_name == 'sessions' || controller_name == 'registrations' %>
+      <%= yield %>
+    <% else %>
+      <div id="root"></div>
+      <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
+    <% end %>
   </body>
 </html>

@@ -1,17 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../../styles/components/Navbar.css";
+import "./styles/Navbar.css";
 
 const Navbar = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const currentUser = document
+      .querySelector('meta[name="current-user"]')
+      .getAttribute("content");
+    setIsAuthenticated(currentUser === "true");
+  }, []);
+
+  function handleLogout(e) {
+    e.preventDefault(); // Evita o comportamento padrão do link
+
+    fetch("/users/sign_out", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
+          .content,
+      },
+      credentials: "same-origin", // Inclui cookies e cabeçalhos de autenticação
+    })
+      .then((response) => {
+        if (response.ok) {
+          window.location.href = "/"; // Redireciona após o logout
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => console.error("Network error:", error));
+  }
+
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
+    <nav className="navbar">
+      <ul className="navbar-list">
+        <li className="navbar-item">
+          <Link to="/" className="navbar-link">
+            Home
+          </Link>
         </li>
-        <li>
-          <Link to="/create">Create Post</Link>
-        </li>
+        {isAuthenticated && (
+          <li className="navbar-item">
+            <Link to="/create" className="navbar-link">
+              New Post
+            </Link>
+          </li>
+        )}
+        {isAuthenticated ? (
+          <li className="navbar-item">
+            <a
+              href="/users/sign_out"
+              className="navbar-link"
+              onClick={handleLogout}
+            >
+              Logout
+            </a>
+          </li>
+        ) : (
+          <li className="navbar-item">
+            <a href="/users/sign_in" className="navbar-link">
+              Login
+            </a>
+          </li>
+        )}
       </ul>
     </nav>
   );
