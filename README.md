@@ -23,9 +23,52 @@ This is a small blog built using React and Ruby on Rails. The blog consists of t
 
 ### Installation
 
-1. Clone the repository:
+#### Clone the repository:
 
 ```sh
 git clone https://github.com/andreypedro/blog-app
 cd blog-app
+```
+
+#### Install dependencies:
+
+```sh
+bundle install
+yarn install
+```
+
+#### Set up the database:
+
+```sh
+rails db:create
+rails db:migrate
+```
+
+#### Set the NewsAPI key in the .env file:
+
+```sh
+echo "NEWS_API_KEY=your_news_api_key_here" > .env
+```
+
+#### Start the Rails server and Webpack dev server:
+
+```sh
+rails server
+bin/webpack-dev-server
+```
+
+#### Testing
+
+To run the tests, use the following command:
+
+```sh
+bundle exec rspec
+```
+
+#### Linter
+
+To run the linter, use the following command:
+
+```sh
+yarn lint
 ```
