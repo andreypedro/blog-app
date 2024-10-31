@@ -44,6 +44,13 @@ rails db:create
 rails db:migrate
 ```
 
+#### Add a new user in development:
+
+```sh
+rails console
+User.create!(email: 'admin@admin.com', password: 'admin123456', password_confirmation: 'admin123456')
+```
+
 #### Set the NewsAPI key in the .env file:
 
 ```sh
