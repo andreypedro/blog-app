@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import PostItem from "./PostItem.jsx";
-import "./styles/ListPosts.css";
+import "./styles/ListPosts.css"; // Importar estilos específicos do componente
 
 const ListPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -40,7 +40,7 @@ const ListPosts = () => {
       }
     };
 
-    checkContentHeight();
+    checkContentHeight(); // Check initially
 
     window.addEventListener("resize", checkContentHeight);
     return () => window.removeEventListener("resize", checkContentHeight);
@@ -48,14 +48,14 @@ const ListPosts = () => {
 
   const handleScroll = useCallback(() => {
     if (
-      window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 1 &&
-      hasMore &&
-      !loading
+      window.innerHeight + document.documentElement.scrollTop !==
+        document.documentElement.offsetHeight ||
+      loading
     ) {
-      setPage((prevPage) => prevPage + 1);
+      return;
     }
-  }, [loading, hasMore]);
+    setPage((prevPage) => prevPage + 1);
+  }, [loading]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -68,8 +68,8 @@ const ListPosts = () => {
     <div>
       <h1>Posts</h1>
       <div className="post-list">
-        {posts.map((post) => (
-          <PostItem key={post.id} post={post} />
+        {posts.map((post, index) => (
+          <PostItem key={post.id || `remote-${index}`} post={post} />
         ))}
       </div>
       {loading && <div className="loading">Loading...</div>}

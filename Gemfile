@@ -61,3 +61,5 @@ gem "webpacker", "~> 5.4"
 gem "kaminari"
 
 gem "devise"
+
+gem "dotenv-rails", groups: [ :development, :test ]
