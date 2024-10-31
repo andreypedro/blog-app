@@ -1,0 +1,7 @@
+<%= javascript_pack_tag 'application' %>
+<div id="posts"></div>
+
+<script type="text/javascript">
+  import Posts from 'components/Posts';
+  ReactDOM.render(<Posts />, document.getElementById('posts'));
+</script>
