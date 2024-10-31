@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import PostItem from "./PostItem.jsx";
-import "./styles/ListPosts.css"; // Importar estilos específicos do componente
+import "./styles/ListPosts.css"; // Import styles specific to the component
 
 const ListPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -48,14 +48,14 @@ const ListPosts = () => {
 
   const handleScroll = useCallback(() => {
     if (
-      window.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight ||
-      loading
+      window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 1 &&
+      hasMore &&
+      !loading
     ) {
-      return;
+      setPage((prevPage) => prevPage + 1);
     }
-    setPage((prevPage) => prevPage + 1);
-  }, [loading]);
+  }, [loading, hasMore]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
