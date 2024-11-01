@@ -1,4 +1,7 @@
 {
+  "name": "blog-app",
+  "version": "1.0.0",
+  "description": "A small blog built using React and Ruby on Rails",
   "scripts": {
     "lint": "eslint 'app/javascript/**/*.{js,jsx}'"
   },
@@ -25,5 +28,6 @@
     "eslint-plugin-react": "^7.37.2",
     "globals": "^15.11.0",
     "webpack-dev-server": "^3"
-  }
+  },
+  "license": "MIT"
 }

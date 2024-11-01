@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import "./styles/PostItem.css";
 
@@ -61,6 +62,20 @@ const PostItem = ({ post, isAuthenticated, onDelete }) => {
       )}
     </div>
   );
+};
+
+PostItem.propTypes = {
+  post: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string,
+    content: PropTypes.string,
+    image: PropTypes.string,
+    url: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+  }).isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default PostItem;

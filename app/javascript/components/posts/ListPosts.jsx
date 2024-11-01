@@ -107,8 +107,8 @@ const ListPosts = () => {
         <div className="no-more-posts">
           <span role="img" aria-label="party-popper">
             🎉
-          </span>{" "}
-          You've reached the end! No more posts.
+          </span>
+          You&apos;ve reached the end! No more posts.
         </div>
       )}
     </div>
