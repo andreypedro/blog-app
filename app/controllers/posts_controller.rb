@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: [ :create, :update, :destroy ]
   def index
-    @local_posts = Post.page(params[:page]).per(2)
+    @local_posts = Post.page(params[:page]).per(2).order("created_at DESC")
     @remote_posts = NewsApiService.fetch_posts("watches", params[:page], 2)
     @posts = (@local_posts + @remote_posts).compact
 
